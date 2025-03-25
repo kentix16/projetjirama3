@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . "/../config/database.php";
-class Eau
+class PayerModel
 {
     private $db;
     public function __construct()
@@ -11,7 +11,7 @@ class Eau
     {
         return $this->db;
     }
-    public function getpayes($nom = '', $order = 'codeEau')
+    public function getpayes($nom = '', $order = 'idpaye')
     {
         $result = $this->db->query("SELECT * FROM payer WHERE nom LiKE \"%$nom%\" ORDER BY $order");
         return $result->fetch_all();
@@ -20,10 +20,10 @@ class Eau
         $result = $this->db->query("SELECT * FROM CLIENT WHERE codecli='$codecli'");
         return $result->fetch_assoc();
     }*/
-    public function getReleveEau($codeEau)
+    public function getpaye($idpaye)
     {
-        $stmt = $this->db->prepare("SELECT * FROM releve_eau WHERE $codeEau = ?");
-        $stmt->bind_param("s", $codeEau);
+        $stmt = $this->db->prepare("SELECT * FROM releve_eau WHERE $idpaye = ?");
+        $stmt->bind_param("s", $idpaye);
         $stmt->execute();
         return $stmt->get_result()->fetch_assoc();
     }
